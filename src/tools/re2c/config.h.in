@@ -1,0 +1,122 @@
+/* Define to 1 if you have the `getpagesize' function. */
+#cmakedefine HAVE_GETPAGESIZE
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#cmakedefine HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <memory.h> header file. */
+#cmakedefine HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#cmakedefine HAVE_MEMSET
+
+/* Define to 1 if you have a working `mmap' system call. */
+#cmakedefine HAVE_MMAP
+
+/* Define to 1 if you have the `munmap' function. */
+#cmakedefine HAVE_MUNMAP
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#cmakedefine HAVE_STDBOOL_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#cmakedefine HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strdup' function. */
+#cmakedefine HAVE_STRDUP
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine HAVE_STRING_H
+
+/* Define to 1 if you have the `strndup' function. */
+#cmakedefine HAVE_STRNDUP
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#cmakedefine HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H
+
+/* Define to 1 if the system has the type `_Bool'. */
+#cmakedefine HAVE__BOOL
+
+/* Name of package */
+#define PACKAGE "re2c"
+
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "re2c-general@lists.sourceforge.net"
+
+/* Define to the full name of this package. */
+#define PACKAGE_NAME "re2c"
+
+/* Define to the full name and version of this package. */
+#define PACKAGE_STRING "re2c 0.13.6"
+
+/* Define to the one symbol short name of this package. */
+#define PACKAGE_TARNAME "re2c"
+
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
+
+/* Define to the version of this package. */
+#define PACKAGE_VERSION "0.13.6"
+
+
+/* The size of `char', as computed by sizeof. */
+#define SIZEOF_CHAR @SIZEOF_CHAR@
+
+/* The size of `int', as computed by sizeof. */
+#define SIZEOF_INT @SIZEOF_INT@
+
+/* The size of `long', as computed by sizeof. */
+#define SIZEOF_LONG @SIZEOF_LONG@
+
+/* The size of `short', as computed by sizeof. */
+#define SIZEOF_SHORT @SIZEOF_SHORT@
+
+/* Define to 1 if you have the ANSI C header files. */
+#cmakedefine HAVE_STDC_HEADERS
+
+/* Version number of package */
+#define VERSION "0.3.16"
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#cmakedefine HAVE_CONST
+#if !defined(HAVE_CONST)
+#if defined(const)
+#undef const
+#endif
+#define const
+#endif
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#define inline @INLINE_KEYWORD@
+#endif
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#cmakedefine HAVE_SIZE_T_IN_TYPE
+#if !defined(HAVE_SIZE_T_IN_TYPE)
+#define size_t unsigned int
+#endif
+
+/* Define to empty if the keyword `volatile' does not work. Warning: valid
+   code using `volatile' can become incorrect without. Disable with care. */
+#cmakedefine HAVE_VOLATILE
+
+#if !defined(HAVE_VOLATILE)
+#define volatile
+#endif
