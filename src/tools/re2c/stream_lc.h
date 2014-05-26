@@ -282,7 +282,7 @@ protected:
 			}
 		}
 		if (cnt != 0) {
-			return fwrite(buf, sizeof(_E), cnt, fp);
+			return fwrite(buf, sizeof(_E), (size_t)cnt, fp);
 		} else {
 			return 0;
 		}

@@ -1284,7 +1284,7 @@ yydestruct (yymsg, yytype, yyvaluep)
 
   switch (yytype)
     {
-
+  case 0:
       default:
 	break;
     }
