@@ -1,6 +1,6 @@
 #include <iostream>
-#include "parser/scanner.hpp"
-#include "parser/io.hpp"
+#include "datascript/scanner/lexer.hpp"
+#include "datascript/scanner/io.hpp"
 
 static const char* txt = "0xDEADBEEF\n"
   "076\n"
@@ -21,8 +21,8 @@ static const char* txt = "0xDEADBEEF\n"
 int main (int argc, char* argv [])
 {
   std::cout << txt << std::endl;
-  input_buffer_t* input = open_string (txt);
-  scanner ds_scanner (input);
+  input_buffer_t* input = DATASCRIPT_SCANNER_NS open_string (txt);
+  DATASCRIPT_SCANNER_NS lexer ds_scanner (input);
   while (true)
     {
       token_t tok = ds_scanner.scan ();

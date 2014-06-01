@@ -1,5 +1,5 @@
-#ifndef __DATASCRIPT_PARSER_SCANNER_HPP__
-#define __DATASCRIPT_PARSER_SCANNER_HPP__
+#ifndef __DATASCRIPT_PARSER_LEXER_HPP__
+#define __DATASCRIPT_PARSER_LEXER_HPP__
 
 #include "datascript/datascript_api.h"
 #include "datascript/scanner/scanner_iface.h"

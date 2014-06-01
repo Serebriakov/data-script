@@ -70,7 +70,7 @@ set (modules
   tools/re2c
   tools/lemon
   datascript
- # parser
+  parser
   unittest
 )
 

@@ -3,4 +3,4 @@ set (src
   scanner_test.cpp
   )
 set (hdr catch.hpp)
-onyx_exec (unittest src hdr)
+onyx_exec (unittest src hdr datascript)

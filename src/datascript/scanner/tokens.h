@@ -94,9 +94,7 @@ typedef enum token_tag
 DATASCRIPT_EXTERN_C DATASCRIPT_API const char* DATASCRIPT_CALLSPEC token_to_string (token_t token);
 
 #if defined(__cplusplus)
-DATASCRIPT_SCANNER_NS_BEGIN
-		DATASCRIPT_API std::ostream& operator << (std::ostream& os, token_t token);
-DATASCRIPT_SCANNER_NS_END	
+DATASCRIPT_API std::ostream& DATASCRIPT_CALLSPEC operator << (std::ostream& os, token_t token);
 #endif
 
 

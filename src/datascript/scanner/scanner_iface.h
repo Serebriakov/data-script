@@ -41,13 +41,15 @@ struct input_buffer_s
 };
 typedef struct input_buffer_s input_buffer_t;
 
+DATASCRIPT_EXTERN_C DATASCRIPT_API void DATASCRIPT_CALLSPEC close_buffer (input_buffer_t* input);
 
 DATASCRIPT_EXTERN_C void fill_buffer (input_buffer_t* input, lexeme_t* lexeme); 
 
 
 DATASCRIPT_EXTERN_C void bind_lexeme (input_buffer_t* input, lexeme_t* lexeme);
 DATASCRIPT_EXTERN_C void close_lexeme (lexeme_t* lexeme);
-DATASCRIPT_EXTERN_C void close_buffer (input_buffer_t* input);
+
+
 
 DATASCRIPT_EXTERN_C token_t next_token (input_buffer_t* input, lexeme_t* lexeme);
 

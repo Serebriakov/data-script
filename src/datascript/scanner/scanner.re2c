@@ -67,7 +67,6 @@ new_line             = "\r\n" | "\n" | "\r";
 <CODE> ";"           { return eSEMICOLON; }
 <CODE> "="           { return eEQ; }
 <CODE> "=="          { return eEQEQ; }
-<CODE> [_a-zA-Z][_a-zA-Z0-9]* { return eID; } 
 <CODE> "{"           { return eLEFT_CURL_BRACKET; }
 <CODE> "}"           { return eRIGHT_CURL_BRACKET; }
 <CODE> "["           { return eLEFT_BRACKET; }
@@ -119,6 +118,7 @@ new_line             = "\r\n" | "\n" | "\r";
 <CODE> "forall"      { return eFORALL;}
 <CODE> "package"     { return ePACKAGE;}
 <CODE> "import"      { return eIMPORT;}
+<CODE> [_a-zA-Z][_a-zA-Z0-9]* { return eID; } 
 <CODE> [^]           { return eUNKNOWN_LEXEME; }
 
 <CODE> "//"	     { YYSETCONDITION(yycCPPCOMMENT); goto yyc_CPPCOMMENT; }

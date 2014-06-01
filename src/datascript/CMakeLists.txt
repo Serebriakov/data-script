@@ -5,7 +5,7 @@ set (scanner_src
   scanner/tokens.cpp 
   scanner/io.cpp
   scanner/scanner_iface.c
-  scanner/scanner.cpp
+  scanner/lexer.cpp
   ${scanner_generated}
   )
 
@@ -13,7 +13,7 @@ set (scanner_hdr
   scanner/tokens.h 
   scanner/io.hpp 
   scanner/scanner_iface.h 
-  scanner/scanner.hpp)
+  scanner/lexer.hpp)
 
 set (generic_src)
 set (generic_hdr

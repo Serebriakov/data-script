@@ -1,4 +1,4 @@
-#include "datascript/scanner/scanner.hpp"
+#include "datascript/scanner/lexer.hpp"
 
 DATASCRIPT_SCANNER_NS_BEGIN
 

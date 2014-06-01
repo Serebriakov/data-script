@@ -17,9 +17,11 @@
 #if defined(__cplusplus)
 #define DATASCRIPT_SCANNER_NS_BEGIN namespace datascript { namespace scanner {
 #define DATASCRIPT_SCANNER_NS_END } }
+#define DATASCRIPT_SCANNER_NS datascript::scanner::
 #else
 #define DATASCRIPT_SCANNER_NS_BEGIN 
 #define DATASCRIPT_SCANNER_NS_END 
+#define DATASCRIPT_SCANNER_NS
 #endif
 
 #endif
