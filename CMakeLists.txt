@@ -70,6 +70,7 @@ set (modules
   tools/re2c
   tools/lemon
   parser
+  unittest
 )
 
 foreach (module ${modules})
