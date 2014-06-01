@@ -9,7 +9,7 @@ DATASCRIPT_SCANNER_NS_BEGIN
 class DATASCRIPT_API lexer
 {
 public:
-  lexer (input_buffer_t* input);
+  explicit lexer (input_buffer_t* input);
   token_t scan ();
 private:
   input_buffer_t* m_input;

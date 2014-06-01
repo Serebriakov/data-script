@@ -153,7 +153,15 @@ const char* token_to_string (token_t token)
     case eUNKNOWN_LEXEME:
       return "ERROR: unknown lexeme";
     };
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunreachable-code"
+#endif
+
   return "UNKNOWN";
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 }
 
 std::ostream& operator << (std::ostream& os, token_t token)
