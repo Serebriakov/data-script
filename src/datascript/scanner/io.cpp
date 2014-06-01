@@ -51,6 +51,8 @@ static void DATASCRIPT_CALLSPEC file_destructor (struct input_buffer_s* fb)
   delete fb;
 }
 // ---------------------------------------------------------------------
+DATASCRIPT_SCANNER_NS_BEGIN
+
 input_buffer_t* DATASCRIPT_CALLSPEC open_file (const char* path, size_t buffer_size)
 {
   FILE* handle = fopen (path, "rb");
@@ -89,6 +91,8 @@ input_buffer_t* DATASCRIPT_CALLSPEC open_file (const char* path, size_t buffer_s
     }
   return 0;
 }
+
+DATASCRIPT_SCANNER_NS_END
 // -----------------------------------------------------------------------
 struct string_buffer_struct 
 {
@@ -118,6 +122,8 @@ static void DATASCRIPT_CALLSPEC string_destructor (struct input_buffer_s* fb)
   delete fb;
 }
 // ---------------------------------------------------------------------
+DATASCRIPT_SCANNER_NS_BEGIN
+
 input_buffer_t* DATASCRIPT_CALLSPEC open_string (const char* string)
 {
   size_t n = strlen (string);
@@ -139,3 +145,5 @@ input_buffer_t* DATASCRIPT_CALLSPEC open_string (const char* string)
   ret->user       = fb;
   return ret;
 }
+
+DATASCRIPT_SCANNER_NS_END

@@ -28,7 +28,7 @@ typedef void        (DATASCRIPT_CALLSPEC *buffer_resize_fn_t) (size_t newsize, v
 typedef int         (DATASCRIPT_CALLSPEC *eof_fn_t)(void* buff);
 typedef void        (DATASCRIPT_CALLSPEC *destructor_fn_t)(struct input_buffer_s*);
 
-struct DATASCRIPT_API input_buffer_s 
+struct input_buffer_s 
 {
   buffer_fn_t      buffer;
   end_fn_t         end;
@@ -38,7 +38,6 @@ struct DATASCRIPT_API input_buffer_s
   eof_fn_t           eof;
   destructor_fn_t    destructor;
   void* user;
-  
 };
 typedef struct input_buffer_s input_buffer_t;
 

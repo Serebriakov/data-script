@@ -1,4 +1,4 @@
-set (scanner_generated ${CMAKE_CURRENT_BINARY_DIR}/scanner/scanner.re2c.c)
+set (scanner_generated ${CMAKE_CURRENT_BINARY_DIR}/scanner.re2c.c)
 set (scanner_input ${CMAKE_CURRENT_SOURCE_DIR}/scanner/scanner.re2c)
 
 set (scanner_src 
@@ -71,7 +71,7 @@ endif ()
 ADD_CUSTOM_COMMAND(
    OUTPUT ${scanner_generated}
    COMMAND ${RE2C} -cbs -o ${scanner_generated} ${scanner_input}
-   DEPENDS re2c-bin {scanner_input}
+   DEPENDS re2c-bin ${scanner_input}
    )
 ADD_CUSTOM_TARGET(scanner ALL DEPENDS ${scanner_generated})
 
