@@ -69,7 +69,8 @@ link_directories (${ONYX_LIBS_PATH})
 set (modules
   tools/re2c
   tools/lemon
-  parser
+  datascript
+ # parser
   unittest
 )
 

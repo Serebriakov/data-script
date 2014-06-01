@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "parser/tokens.h"
+#include "datascript/scanner/tokens.h"
 
 const char* token_to_string (token_t token)
 {
@@ -156,10 +156,14 @@ const char* token_to_string (token_t token)
   return "UNKNOWN";
 }
 
+DATASCRIPT_SCANNER_NS_BEGIN
 
-std::ostream& operator << (std::ostream& os, token_t token)
-{
-  os << token_to_string (token);
-  return os;
-}
+
+	std::ostream& operator << (std::ostream& os, token_t token)
+	{
+		os << token_to_string (token);
+		return os;
+	}
+
+DATASCRIPT_SCANNER_NS_END 
 

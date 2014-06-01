@@ -1,6 +1,8 @@
 #ifndef __DATASCRIPT_PARSER_TOKENS_H__
 #define __DATASCRIPT_PARSER_TOKENS_H__
 
+#include "datascript/datascript_api.h"
+
 #if defined(__cplusplus)
 #include <iosfwd>
 #endif
@@ -89,14 +91,12 @@ typedef enum token_tag
   eUNKNOWN_LEXEME
 } token_t;
 
-#if defined(__cplusplus)
-extern "C"
-#endif
-const char* token_to_string (token_t token);
-
+DATASCRIPT_EXTERN_C DATASCRIPT_API const char* DATASCRIPT_CALLSPEC token_to_string (token_t token);
 
 #if defined(__cplusplus)
-std::ostream& operator << (std::ostream& os, token_t token);
+DATASCRIPT_SCANNER_NS_BEGIN
+		DATASCRIPT_API std::ostream& operator << (std::ostream& os, token_t token);
+DATASCRIPT_SCANNER_NS_END	
 #endif
 
 

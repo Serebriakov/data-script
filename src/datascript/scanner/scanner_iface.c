@@ -1,5 +1,5 @@
 #include <string.h>
-#include "parser/scanner_iface.h"
+#include "datascript/scanner/scanner_iface.h"
 
 
 void fill_buffer(input_buffer_t *buffer, lexeme_t *lexeme) 

@@ -1,7 +1,7 @@
 #include <vector>
 #include <stdio.h>
 #include <string.h>
-#include "parser/io.hpp"
+#include "datascript/scanner/io.hpp"
 
 struct file_buffer_struct 
 {
@@ -9,41 +9,41 @@ struct file_buffer_struct
   FILE *handle;
 };
 // ---------------------------------------------------------------------
-static char* file_buffer (void* buff)
+static char* DATASCRIPT_CALLSPEC file_buffer (void* buff)
 {
   return ((file_buffer_struct*)buff)->buffer.data ();
 }
 // ---------------------------------------------------------------------
-static const char* file_end (void* buff)
+static const char* DATASCRIPT_CALLSPEC file_end (void* buff)
 {
   file_buffer_struct* fb = (file_buffer_struct*)buff;
   return fb->buffer.data () + fb->buffer.size ();
 }
 // ---------------------------------------------------------------------
-static size_t file_size (void* buff)
+static size_t DATASCRIPT_CALLSPEC file_size (void* buff)
 {
   return ((file_buffer_struct*)buff)->buffer.size ();
 }
 // ---------------------------------------------------------------------
-static size_t file_read (void *ptr, size_t size, size_t nmemb, void* buff)
+static size_t DATASCRIPT_CALLSPEC file_read (void *ptr, size_t size, size_t nmemb, void* buff)
 {
   file_buffer_struct* fb = (file_buffer_struct*)buff;
   return fread (ptr, size, nmemb, fb->handle);
 }
 // ---------------------------------------------------------------------
-static void file_resize (size_t newsize, void* buff)
+static void DATASCRIPT_CALLSPEC file_resize (size_t newsize, void* buff)
 {
   file_buffer_struct* fb = (file_buffer_struct*)buff;
   fb->buffer.resize (newsize);
 }
 // ---------------------------------------------------------------------
-static int file_eof (void* buff)
+static int DATASCRIPT_CALLSPEC file_eof (void* buff)
 {
   file_buffer_struct* fb = (file_buffer_struct*)buff;
   return feof (fb->handle);
 }
 // ---------------------------------------------------------------------
-static void file_destructor (struct input_buffer_s* fb)
+static void DATASCRIPT_CALLSPEC file_destructor (struct input_buffer_s* fb)
 {
   file_buffer_struct* ufb = (file_buffer_struct*)fb->user;
   fclose (ufb->handle);
@@ -51,7 +51,7 @@ static void file_destructor (struct input_buffer_s* fb)
   delete fb;
 }
 // ---------------------------------------------------------------------
-input_buffer_t* open_file (const char* path, size_t buffer_size)
+input_buffer_t* DATASCRIPT_CALLSPEC open_file (const char* path, size_t buffer_size)
 {
   FILE* handle = fopen (path, "rb");
   if (handle) 
@@ -95,30 +95,30 @@ struct string_buffer_struct
   std::vector <char> buffer;
 };
 
-static char* string_buffer (void* buff)
+static char* DATASCRIPT_CALLSPEC string_buffer (void* buff)
 {
   return ((string_buffer_struct*)buff)->buffer.data ();
 }
 // ---------------------------------------------------------------------
-static const char* string_end (void* buff)
+static const char* DATASCRIPT_CALLSPEC string_end (void* buff)
 {
   string_buffer_struct* fb = (string_buffer_struct*)buff;
   return fb->buffer.data () + fb->buffer.size ();
 }
 // ---------------------------------------------------------------------
-static size_t string_size (void* buff)
+static size_t DATASCRIPT_CALLSPEC string_size (void* buff)
 {
   return ((string_buffer_struct*)buff)->buffer.size ();
 }
 // ---------------------------------------------------------------------
-static void string_destructor (struct input_buffer_s* fb)
+static void DATASCRIPT_CALLSPEC string_destructor (struct input_buffer_s* fb)
 {
   string_buffer_struct* ufb = (string_buffer_struct*)fb->user;
   delete ufb;
   delete fb;
 }
 // ---------------------------------------------------------------------
-input_buffer_t* open_string (const char* string)
+input_buffer_t* DATASCRIPT_CALLSPEC open_string (const char* string)
 {
   size_t n = strlen (string);
   string_buffer_struct* fb = new string_buffer_struct;

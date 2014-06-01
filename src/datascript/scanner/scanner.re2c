@@ -1,5 +1,5 @@
-#include "parser/tokens.h"
-#include "parser/scanner_iface.h"
+#include "datascript/scanner/tokens.h"
+#include "datascript/scanner/scanner_iface.h"
 
 #define YYCTYPE char
 #define YYGETCONDITION() currentCondition

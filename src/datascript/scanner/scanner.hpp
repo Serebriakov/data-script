@@ -1,7 +1,7 @@
 #ifndef __DATASCRIPT_PARSER_SCANNER_HPP__
 #define __DATASCRIPT_PARSER_SCANNER_HPP__
 
-#include "parser/scanner_iface.h"
+#include "datascript/scanner/scanner_iface.h"
 
 
 class scanner 

@@ -1,4 +1,4 @@
-#include "parser/scanner.hpp"
+#include "datascript/scanner/scanner.hpp"
 
 scanner::scanner (input_buffer_t* input)
   : m_input (input)
