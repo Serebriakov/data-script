@@ -11,13 +11,13 @@ struct file_buffer_struct
 // ---------------------------------------------------------------------
 static char* DATASCRIPT_CALLSPEC file_buffer (void* buff)
 {
-  return ((file_buffer_struct*)buff)->buffer.data ();
+  return &((file_buffer_struct*)buff)->buffer [0];
 }
 // ---------------------------------------------------------------------
 static const char* DATASCRIPT_CALLSPEC file_end (void* buff)
 {
   file_buffer_struct* fb = (file_buffer_struct*)buff;
-  return fb->buffer.data () + fb->buffer.size ();
+  return &fb->buffer [0] + fb->buffer.size ();
 }
 // ---------------------------------------------------------------------
 static size_t DATASCRIPT_CALLSPEC file_size (void* buff)
@@ -60,7 +60,7 @@ input_buffer_t* DATASCRIPT_CALLSPEC open_file (const char* path, size_t buffer_s
     {
       file_buffer_struct* fb = new file_buffer_struct;
       fb->buffer.resize (buffer_size);
-      size_t read = fread(fb->buffer.data (), 1, buffer_size, handle);
+      size_t read = fread(&fb->buffer [0], 1, buffer_size, handle);
       if (read != buffer_size)
 	{
 	  fclose (handle);
@@ -101,13 +101,13 @@ struct string_buffer_struct
 
 static char* DATASCRIPT_CALLSPEC string_buffer (void* buff)
 {
-  return ((string_buffer_struct*)buff)->buffer.data ();
+  return &((string_buffer_struct*)buff)->buffer [0];
 }
 // ---------------------------------------------------------------------
 static const char* DATASCRIPT_CALLSPEC string_end (void* buff)
 {
   string_buffer_struct* fb = (string_buffer_struct*)buff;
-  return fb->buffer.data () + fb->buffer.size ();
+  return &fb->buffer [0] + fb->buffer.size ();
 }
 // ---------------------------------------------------------------------
 static size_t DATASCRIPT_CALLSPEC string_size (void* buff)
@@ -129,7 +129,7 @@ input_buffer_t* DATASCRIPT_CALLSPEC open_string (const char* string)
   size_t n = strlen (string);
   string_buffer_struct* fb = new string_buffer_struct;
   fb->buffer.resize (n+1);
-  memcpy (fb->buffer.data (), string, n);
+  memcpy (&fb->buffer [0], string, n);
   fb->buffer [n] = 0;
 
 

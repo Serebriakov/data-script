@@ -8,7 +8,6 @@
 #endforeach()
 
 include (TestBigEndian)
-include (FindOpenMP)
 
 test_big_endian (ONYX_HAS_BIGENDIAN)
 
@@ -135,11 +134,21 @@ set (SUN_CXX_WARNINGS "${SUN_CC_COMMON_WARNINGS} +w2 ")
 
 set (SUN_CC_COMMON_FLAGS "-features=extensions -mt ${SUNCC_64_FLAG} ${LFS_FLAGS}")
 
+if (BUILD_64BIT)
+  set (SUN_CC_COMMON_FLAGS "${SUN_CC_COMMON_FLAGS} -m64")
+endif ()
+
 set (SUN_CXX_FLAGS_DEBUG "${SUN_CC_COMMON_FLAGS} -g ")
-set (SUN_CXX_FLAGS_RELEASE "${SUN_CC_COMMON_FLAGS} -xtarget=native -fast -xarch=amd64  ")
+set (SUN_CXX_FLAGS_RELEASE "${SUN_CC_COMMON_FLAGS} -xtarget=native -fast  ")
 
 set (SUN_CC_FLAGS_DEBUG "${SUN_CC_COMMON_FLAGS} -g ")
-set (SUN_CC_FLAGS_RELEASE "${SUN_CC_COMMON_FLAGS} -xtarget=native -fast -xarch=amd64 ")
+set (SUN_CC_FLAGS_RELEASE "${SUN_CC_COMMON_FLAGS} -xtarget=native -fast  ")
+
+
+if (BUILD_64BIT)
+  set (SUN_CXX_FLAGS_RELEASE "${SUN_CXX_FLAGS_RELEASE} -xarch=amd64  ")
+  set (SUN_CC_FLAGS_RELEASE "${SUN_CXX_FLAGS_RELEASE}  -xarch=amd64 ")
+endif ()
 
 set (SUN_CC_DEFINES_DEBUG "-D_DEBUG=1 -DONYX_DEBUG ")
 set (SUN_CC_DEFINES_RELEASE "-DNDEBUG  ")

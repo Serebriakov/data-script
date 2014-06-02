@@ -165,7 +165,7 @@ void context_rule(CondList *clist, RegExp *expr, RegExp *look, Str *newcond, Tok
 		{
 			size_t nIndex = specMap.size() + 1; // 0 is reserved for "0"-spec
 			assert( nIndex < 1u << 31);
-			specMap[*it] = std::make_pair(unsigned( nIndex), rule);
+		     	specMap[*it] = std::make_pair(unsigned( nIndex), (RegExp*)rule);
 		}
 		
 	}
@@ -2433,7 +2433,7 @@ void parse(Scanner& i, std::ostream& o, std::ostream* h)
 					// After merging star rules merge none code to specmap
 					// this simplifies some stuff.
 					// Note that "0" inserts first, which is important.
-					specMap["0"] = std::make_pair(0, specNone);
+				  specMap["0"] = std::make_pair((unsigned)0, dynamic_cast <RegExp*>(specNone));
 				}
 				else
 				{
