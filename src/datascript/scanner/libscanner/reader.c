@@ -2,7 +2,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#if !defined(_MSC_VER)
 #include <unistd.h>
+#else
+#include <io.h>
+#define read _read
+#define open _open
+#define close _close
+#endif
 #include <errno.h>
 
 #include "datascript/scanner/libscanner/reader.h"

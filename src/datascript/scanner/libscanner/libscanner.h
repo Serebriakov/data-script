@@ -1,8 +1,12 @@
 #ifndef __DATASCRIPT_SCANNER_LIBSCANNER_H__
 #define __DATASCRIPT_SCANNER_LIBSCANNER_H__
 
-#include <sys/types.h>
 #include <stddef.h>
+#if !defined(_MSC_VER)
+#include <sys/types.h>
+#else
+typedef long ssize_t;
+#endif
 #include "datascript/compiler.h"
 
 struct scanstate;
