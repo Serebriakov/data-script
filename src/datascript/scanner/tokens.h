@@ -9,6 +9,7 @@
 
 typedef enum token_tag 
 {
+  eWHITESPACE,
   eDECIMAL_NUMBER,
   eHEX_NUMBER,
   eBINARY_NUMBER,

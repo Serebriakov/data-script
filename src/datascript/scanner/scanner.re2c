@@ -41,13 +41,13 @@ upperdigit           = [A-Z0-9];
 alpha                = [a-zA-Z];
 alphadigit           = [a-zA-Z0-9];
 any                  = [^];
-ws                   = [ \t];
+ws                   = [ \t\v\f];
 ast                  = "*"; 
 new_line             = "\r\n" | "\n" | "\r";
  
 
 <CODE> new_line      { lexeme->line_no++;  goto yyc_CODE; }
-<CODE> ws            { goto yyc_CODE; }
+<CODE> ws+           { return eWHITESPACE; }
 <CODE> ["]           { YYSETCONDITION(yycSTRING); goto yyc_STRING; }
 <CODE> EOF           { return eEND_OF_FILE; }
 <CODE> "0" [xX] hex+ { return eHEX_NUMBER; }

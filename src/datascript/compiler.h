@@ -80,5 +80,10 @@
 #define DATASCRIPT_EXTERN_C
 #endif
 
+/* use expression as sub-expression,
+   then make type of full expression int, discard result */
+#define DATASCRIPT_UNUSED(x) (void)(sizeof((x), 0))
+
+
 
 #endif

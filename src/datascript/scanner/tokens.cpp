@@ -6,6 +6,8 @@ const char* token_to_string (token_t token)
 {
   switch (token)
     {
+    case eWHITESPACE:
+      return "WS";
     case eDECIMAL_NUMBER:
       return "DECIMAL NUMBER";
     case eHEX_NUMBER:

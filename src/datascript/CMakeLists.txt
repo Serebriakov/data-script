@@ -14,7 +14,16 @@ set (scanner_hdr
   scanner/io.hpp 
   scanner/scanner_iface.h 
   scanner/lexer.hpp)
-
+# -------------------------------------------------
+set (libscanner_src
+  scanner/libscanner/libscanner.c
+  scanner/libscanner/reader.c
+)
+set (libscanner_hdr
+  scanner/libscanner/libscanner.h
+  scanner/libscanner/reader.h
+)
+# -------------------------------------------------
 set (generic_src)
 set (generic_hdr
 	compiler.h
@@ -28,6 +37,7 @@ set (generic_hdr
 set (modules 
 	generic
 	scanner
+	libscanner
 )
 
 if (WIN32)

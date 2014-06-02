@@ -43,6 +43,7 @@
   }  
 
 // ================================================================================
+SIMPLE_LEXER_TEST (eWHITESPACE    , " ")
 SIMPLE_LEXER_TEST (eDECIMAL_NUMBER, "123")
 SIMPLE_LEXER_TEST (eHEX_NUMBER    , "0x12")
 SIMPLE_LEXER_TEST (eOCTAL_NUMBER  , "03")
@@ -128,3 +129,4 @@ SIMPLE_LEXER_TEST (eIMPORT, "import")
 
 
 SIMPLE_LEXER_TEST_ERR ("$")
+
