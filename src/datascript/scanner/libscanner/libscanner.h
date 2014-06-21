@@ -101,6 +101,8 @@ struct scanstate {
 
   /* Never touched by any re2c routines.  See scanstate::userref. */
     void *userproc;     
+
+	int buffer_owner;
 };
 typedef struct scanstate scanstate;
 
@@ -133,7 +135,7 @@ typedef struct scanstate scanstate;
 #define YYFILL(n)   do {					       \
     if(ss->last_read > 0) ss->last_read = (*ss->read)(ss);	       \
     if(ss->last_read < 0) return ss->last_read;			       \
-    if((ss)->cursor >= (ss)->limit) return 0;			       \
+    if((ss)->cursor >= (ss)->limit) return YYFILL_EOF;			       \
   } while(0);
 
 
@@ -152,7 +154,8 @@ typedef struct scanstate scanstate;
 
 DATASCRIPT_EXTERN_C void  scanstate_init (scanstate *ss, 
 					  const char *bufptr, 
-					  size_t bufsiz);
+					  size_t bufsiz,
+					  int buffer_owner);
 
 DATASCRIPT_EXTERN_C void scanstate_reset (scanstate *ss);
 
@@ -331,7 +334,7 @@ DATASCRIPT_EXTERN_C void scanstate_reset (scanstate *ss);
 * with dynscan_create.
 */
 
-DATASCRIPT_EXTERN_C scanstate* dynscan_create(size_t bufsiz);
+DATASCRIPT_EXTERN_C scanstate* dynscan_create(size_t bufsiz, int buffer_owner);
 DATASCRIPT_EXTERN_C void dynscan_free(scanstate *ss);
 
 #endif

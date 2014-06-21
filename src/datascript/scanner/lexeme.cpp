@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "datascript/scanner/tokens.h"
-
+#include "datascript/scanner/lexeme.hpp"
+DATASCRIPT_SCANNER_NS_BEGIN
 const char* token_to_string (token_t token)
 {
   switch (token)
@@ -174,3 +174,4 @@ std::ostream& operator << (std::ostream& os, token_t token)
 
 
 
+DATASCRIPT_SCANNER_NS_END

@@ -18,10 +18,12 @@
 #define DATASCRIPT_SCANNER_NS_BEGIN namespace datascript { namespace scanner {
 #define DATASCRIPT_SCANNER_NS_END } }
 #define DATASCRIPT_SCANNER_NS datascript::scanner::
+#define USING_DATASCRIPT_SCANNER_NS using namespace datascript::scanner
 #else
 #define DATASCRIPT_SCANNER_NS_BEGIN 
 #define DATASCRIPT_SCANNER_NS_END 
 #define DATASCRIPT_SCANNER_NS
+#define USING_DATASCRIPT_SCANNER_NS
 #endif
 
 #endif

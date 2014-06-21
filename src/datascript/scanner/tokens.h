@@ -1,103 +1,80 @@
 #ifndef __DATASCRIPT_PARSER_TOKENS_H__
 #define __DATASCRIPT_PARSER_TOKENS_H__
 
-#include "datascript/datascript_api.h"
-
-#if defined(__cplusplus)
-#include <iosfwd>
-#endif
-
-typedef enum token_tag 
-{
-  eWHITESPACE,
-  eDECIMAL_NUMBER,
-  eHEX_NUMBER,
-  eBINARY_NUMBER,
-  eOCTAL_NUMBER,
-  eSTRING,
-  eUINT8,
-  eUINT16,
-  eUINT32,
-  eUINT64,
-  eINT8,
-  eINT16,
-  eINT32,
-  eINT64,
-  eBIT,
-  eCOLON,
-  eSEMICOLON,
-  eEQ,
-  eLT,
-  eLEQ,
-  eGT,
-  eGEQ,
-  eNEQ,
-  eEQEQ,
-  eLOGIC_AND,
-  eLOGIC_OR,
-  eLOGIC_NOT,
-  eASS_MUL,
-  eASS_DIV,
-  eASS_MOD,
-  eASS_PLUS,
-  eASS_MINUS,
-  eASS_SHR,
-  eASS_SHL,
-  eASS_AND,
-  eASS_OR,
-  eASS_XOR,
-  eAND,
-  eOR,
-  eXOR,
-  
-
-  ePLUS,
-  eMINUS,
-  eNOT,
-  eDIV,
-  eMUL,
-  eMOD,
-  eSHR,
-  eSHL,
-
-  eID,
-  eLEFT_CURL_BRACKET,
-  eRIGHT_CURL_BRACKET,
-  eLEFT_BRACKET,
-  eRIGHT_BRACKET,
-  eLEFT_PAREN,
-  eRIGHT_PAREN,
-  eUNION,
-  eCHOICE,
-  eON,
-  eCASE,
-  eIF,
-  eFUNCTION,
-  eALIGN,
-  
-  eSIZEOF,
-  eBITSIZEOF,
-  eLENGTHOF,
-  eIS,
-  eSUM,
-  eQUESTION,
-  eFORALL,
-  
-  ePACKAGE,
-  eIMPORT,
-
-  eEND_OF_FILE,
-
-  eUNTERMINATED_STRING,
-  eUNKNOWN_LEXEME
-} token_t;
-
-DATASCRIPT_EXTERN_C DATASCRIPT_API const char* DATASCRIPT_CALLSPEC token_to_string (token_t token);
-
-#if defined(__cplusplus)
-DATASCRIPT_API std::ostream& DATASCRIPT_CALLSPEC operator << (std::ostream& os, token_t token);
-#endif
-
+#define WHITESPACE			1
+#define DECIMAL_NUMBER		2
+#define HEX_NUMBER			3
+#define BINARY_NUMBER		4
+#define OCTAL_NUMBER		5
+#define STRING				6
+#define UINT8				7
+#define UINT16				8
+#define UINT32				9
+#define UINT64				10
+#define INT8				11
+#define INT16				12
+#define INT32				13
+#define INT64				14
+#define BIT					15
+#define COLON				16
+#define SEMICOLON			17
+#define EQ					18
+#define LT					19
+#define LEQ					20
+#define GT					21
+#define GEQ					22
+#define NEQ					23
+#define EQEQ				24
+#define LOGIC_AND			25
+#define LOGIC_OR			26
+#define LOGIC_NOT			27
+#define ASS_MUL				28
+#define ASS_DIV				29
+#define ASS_MOD				30
+#define ASS_PLUS			31
+#define ASS_MINUS			32
+#define ASS_SHR				33
+#define ASS_SHL				34
+#define ASS_AND				35
+#define ASS_OR				36
+#define ASS_XOR				37
+#define AND					38
+#define OR					39
+#define XOR					40
+#define PLUS				41
+#define MINUS				42
+#define NOT					43
+#define DIV					44
+#define MUL					45
+#define MOD					46
+#define SHR					47
+#define SHL					48
+#define ID					49
+#define LEFT_CURL_BRACKET	50
+#define RIGHT_CURL_BRACKET	51
+#define LEFT_BRACKET		52
+#define RIGHT_BRACKET		53
+#define LEFT_PAREN			54
+#define RIGHT_PAREN			55
+#define UNION				56
+#define CHOICE				57
+#define ON					58
+#define CASE				59
+#define IF					60
+#define FUNCTION			61
+#define ALIGN				62
+#define SIZEOF				63
+#define BITSIZEOF			64
+#define LENGTHOF			65	
+#define IS					66
+#define SUM					67
+#define QUESTION			68
+#define FORALL				69
+#define PACKAGE				70
+#define IMPORT				71
+#define END_OF_FILE			72
+#define UNTERMINATED_STRING 73
+#define UNKNOWN_LEXEME		74 
 
 #endif
 

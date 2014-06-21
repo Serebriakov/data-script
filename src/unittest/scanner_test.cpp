@@ -1,7 +1,6 @@
 #include "unittest/catch.hpp"
 
 #include "datascript/scanner/lexer.hpp"
-#include "datascript/scanner/io.hpp"
 
 #define STRINGIZE_DIRECT(E) #E
 #define STRINGIZE(E) STRINGIZE_DIRECT(E)
@@ -9,12 +8,14 @@
 #define SIMPLE_LEXER_TEST(EXPECTED, EXPR)				\
   TEST_CASE ("SIMPLE_LEXER_TEST_" STRINGIZE(EXPECTED) "_" STRINGIZE (__LINE__), "") \
   {									\
-    input_buffer_t* input = DATASCRIPT_SCANNER_NS open_string (EXPR);	\
-    DATASCRIPT_SCANNER_NS lexer ds_scanner (input);			\
+  USING_DATASCRIPT_SCANNER_NS;\
+    lexer ds_scanner (EXPR);			\
     int k = 0;								\
     while (true)							\
       {									\
-	token_t tok = ds_scanner.scan ();				\
+	  const char* s = 0;\
+	  const char* e = 0;					\
+	token_t tok = ds_scanner.scan (s, e);				\
 	if (k == 0)							\
 	  {								\
 	    REQUIRE (tok == EXPECTED);					\
@@ -29,21 +30,22 @@
 	    break;							\
 	  }								\
       }									\
-    close_buffer (input);						\
   }  
 
 #define SIMPLE_LEXER_TEST_ERR(EXPR)					\
   TEST_CASE ("SIMPLE_LEXER_TEST_ERR_" STRINGIZE (__LINE__), "")		\
   {									\
-    input_buffer_t* input = DATASCRIPT_SCANNER_NS open_string (EXPR);	\
-    DATASCRIPT_SCANNER_NS lexer ds_scanner (input);			\
-    token_t tok = ds_scanner.scan ();					\
+  USING_DATASCRIPT_SCANNER_NS;\
+    lexer ds_scanner (EXPR);			\
+	const char* s = 0;\
+	const char* e = 0;\
+    token_t tok = ds_scanner.scan (s, e);					\
     REQUIRE (tok == eUNKNOWN_LEXEME);					\
-    close_buffer (input);						\
   }  
 
 // ================================================================================
 SIMPLE_LEXER_TEST (eWHITESPACE    , " ")
+
 SIMPLE_LEXER_TEST (eDECIMAL_NUMBER, "123")
 SIMPLE_LEXER_TEST (eHEX_NUMBER    , "0x12")
 SIMPLE_LEXER_TEST (eOCTAL_NUMBER  , "03")
@@ -72,7 +74,6 @@ SIMPLE_LEXER_TEST (eEQEQ          , "==")
 SIMPLE_LEXER_TEST (eID            , "_zopa_123")
 SIMPLE_LEXER_TEST (eID            , "_")
 
-
 SIMPLE_LEXER_TEST (eLT, "<")
 SIMPLE_LEXER_TEST (eLEQ, "<=")
 SIMPLE_LEXER_TEST (eGT, ">")
@@ -97,7 +98,10 @@ SIMPLE_LEXER_TEST (eXOR, "^")
 SIMPLE_LEXER_TEST (ePLUS, "+")
 SIMPLE_LEXER_TEST (eMINUS, "-")
 SIMPLE_LEXER_TEST (eNOT, "~")
+
+
 SIMPLE_LEXER_TEST (eDIV, "/")
+
 SIMPLE_LEXER_TEST (eMUL, "*")
 SIMPLE_LEXER_TEST (eMOD, "%")
 SIMPLE_LEXER_TEST (eSHR, ">>")

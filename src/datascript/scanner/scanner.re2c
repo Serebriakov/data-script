@@ -1,10 +1,10 @@
+#define YYFILL_EOF END_OF_FILE
 #include "datascript/scanner/tokens.h"
-#include "datascript/scanner/scanner_iface.h"
+#include "datascript/scanner/libscanner/libscanner.h"
 
-#define YYCTYPE char
+
 #define YYGETCONDITION() currentCondition
 #define YYSETCONDITION(c) currentCondition = c
-#define YYFILL fill_buffer(buffer, lexeme)
  
 static enum YYCONDTYPE {
   yycCODE,
@@ -15,19 +15,11 @@ static enum YYCONDTYPE {
 
 } currentCondition;
  
-#define BUFFER_END buffer->end (buffer->user)
-
-token_t next_token(input_buffer_t* buffer, lexeme_t* lexeme) 
+static int scanner_start (scanstate *ss) 
 {
-    lexeme->start = lexeme->current;
+   scanner_enter(ss); 
  
 /*!re2c
-re2c:define:YYCURSOR = lexeme->current;
-re2c:define:YYMARKER = lexeme->ptr;
-re2c:yyfill:enable = 1;
-re2c:indent:top = 1;
-re2c:define:YYLIMIT = BUFFER_END;
-re2c:yyfill:parameter = 0;
 
 EOF = [\000];
 ascii                = [\x20-\x7e];
@@ -35,7 +27,7 @@ lower                = [a-z];
 upper                = [A-Z];
 digit                = [0-9];
 hex                  = [0-9a-fA-F];
-oct	             = [0-7];
+oct	                 = [0-7];
 lowerdigit           = [a-z0-9];
 upperdigit           = [A-Z0-9];
 alpha                = [a-zA-Z];
@@ -44,101 +36,116 @@ any                  = [^];
 ws                   = [ \t\v\f];
 ast                  = "*"; 
 new_line             = "\r\n" | "\n" | "\r";
+atmosphere           = new_line+ | ws+ | EOF;
  
 
-<CODE> new_line      { lexeme->line_no++;  goto yyc_CODE; }
-<CODE> ws+           { return eWHITESPACE; }
+<CODE> new_line      { scan_inc_line(ss);  goto yyc_CODE; }
+<CODE> ws+           { return WHITESPACE; }
 <CODE> ["]           { YYSETCONDITION(yycSTRING); goto yyc_STRING; }
-<CODE> EOF           { return eEND_OF_FILE; }
-<CODE> "0" [xX] hex+ { return eHEX_NUMBER; }
-<CODE> "0"  oct+     { return eOCTAL_NUMBER; }
-<CODE> [01]+ [bB]    { return eBINARY_NUMBER; }
-<CODE> [1-9] digit*  { return eDECIMAL_NUMBER; }
-<CODE> "int8"        { return eINT8; }
-<CODE> "int16"       { return eINT16; }
-<CODE> "int32"       { return eINT32; }
-<CODE> "int64"       { return eINT64; }
-<CODE> "uint8"       { return eUINT8; }
-<CODE> "uint16"      { return eUINT16; }
-<CODE> "uint32"      { return eUINT32; }
-<CODE> "uint64"      { return eUINT64; }
-<CODE> "bit"         { return eBIT; }
-<CODE> ":"           { return eCOLON; }
-<CODE> ";"           { return eSEMICOLON; }
-<CODE> "="           { return eEQ; }
-<CODE> "=="          { return eEQEQ; }
-<CODE> "{"           { return eLEFT_CURL_BRACKET; }
-<CODE> "}"           { return eRIGHT_CURL_BRACKET; }
-<CODE> "["           { return eLEFT_BRACKET; }
-<CODE> "]"           { return eRIGHT_BRACKET; }
-<CODE> "("           { return eLEFT_PAREN; }
-<CODE> ")"           { return eRIGHT_PAREN; }
-<CODE> "union"       { return eUNION; }
-<CODE> "choice"      { return eCHOICE; }
-<CODE> "on"          { return eON; }
-<CODE> "case"        { return eCASE; }
-<CODE> "if"          { return eIF; }
-<CODE> "function"    { return eFUNCTION; }
-<CODE> "align"       { return eALIGN;}
-<CODE> "<"           { return eLT;}
-<CODE> "<="          { return eLEQ;}
-<CODE> ">"           { return eGT;}
-<CODE> ">="          { return eGEQ;}
-<CODE> "!="          { return eNEQ;}
-<CODE> "&&"          { return eLOGIC_AND;}
-<CODE> "||"          { return eLOGIC_OR;}
-<CODE> "!"           { return eLOGIC_NOT;}
-<CODE> "&"           { return eAND;}
-<CODE> "|"           { return eOR;}
-<CODE> "^"           { return eXOR;}
-<CODE> "*="          { return eASS_MUL;}
-<CODE> "/="          { return eASS_DIV;}
-<CODE> "%="          { return eASS_MOD;}
-<CODE> "+="          { return eASS_PLUS;}
-<CODE> "-="          { return eASS_MINUS;}
-<CODE> "<<="         { return eASS_SHL;}
-<CODE> ">>="         { return eASS_SHR;}
-<CODE> "&="          { return eASS_AND;}
-<CODE> "|="          { return eASS_OR;}
-<CODE> "^="          { return eASS_XOR;}
-<CODE> "+"           { return ePLUS;}
-<CODE> "-"           { return eMINUS;}
-<CODE> "~"           { return eNOT;}
-<CODE> "*"           { return eMUL;}
-<CODE> "/"           { return eDIV;}
-<CODE> "%"           { return eMOD;}
-<CODE> "<<"          { return eSHL;}
-<CODE> ">>"          { return eSHR;}
-<CODE> "sizeof"      { return eSIZEOF;}
-<CODE> "bitsizeof"   { return eBITSIZEOF;}
-<CODE> "lengthof"    { return eLENGTHOF;}
-<CODE> "is"          { return eIS;}
-<CODE> "sum"         { return eSUM;}
-<CODE> "?"           { return eQUESTION;}
-<CODE> "forall"      { return eFORALL;}
-<CODE> "package"     { return ePACKAGE;}
-<CODE> "import"      { return eIMPORT;}
-<CODE> [_a-zA-Z][_a-zA-Z0-9]* { return eID; } 
-<CODE> [^]           { return eUNKNOWN_LEXEME; }
+<CODE> EOF           { return END_OF_FILE; }
+<CODE> "0" [xX] hex+ { return HEX_NUMBER; }
+<CODE> "0"  oct+     { return OCTAL_NUMBER; }
+<CODE> [01]+ [bB]    { return BINARY_NUMBER; }
+<CODE> [1-9] digit*  { return DECIMAL_NUMBER; }
+<CODE> "int8"        { return INT8; }
+<CODE> "int16"       { return INT16; }
+<CODE> "int32"       { return INT32; }
+<CODE> "int64"       { return INT64; }
+<CODE> "uint8"       { return UINT8; }
+<CODE> "uint16"      { return UINT16; }
+<CODE> "uint32"      { return UINT32; }
+<CODE> "uint64"      { return UINT64; }
+<CODE> "bit"         { return BIT; }
+<CODE> ":"           { return COLON; }
+<CODE> ";"           { return SEMICOLON; }
+<CODE> "="           { return EQ; }
+<CODE> "=="          { return EQEQ; }
+<CODE> "{"           { return LEFT_CURL_BRACKET; }
+<CODE> "}"           { return RIGHT_CURL_BRACKET; }
+<CODE> "["           { return LEFT_BRACKET; }
+<CODE> "]"           { return RIGHT_BRACKET; }
+<CODE> "("           { return LEFT_PAREN; }
+<CODE> ")"           { return RIGHT_PAREN; }
+<CODE> "union"       { return UNION; }
+<CODE> "choice"      { return CHOICE; }
+<CODE> "on"          { return ON; }
+<CODE> "case"        { return CASE; }
+<CODE> "if"          { return IF; }
+<CODE> "function"    { return FUNCTION; }
+<CODE> "align"       { return ALIGN;}
+<CODE> "<"           { return LT;}
+<CODE> "<="          { return LEQ;}
+<CODE> ">"           { return GT;}
+<CODE> ">="          { return GEQ;}
+<CODE> "!="          { return NEQ;}
+<CODE> "&&"          { return LOGIC_AND;}
+<CODE> "||"          { return LOGIC_OR;}
+<CODE> "!"           { return LOGIC_NOT;}
+<CODE> "&"           { return AND;}
+<CODE> "|"           { return OR;}
+<CODE> "^"           { return XOR;}
+<CODE> "*="          { return ASS_MUL;}
+<CODE> "/="          { return ASS_DIV;}
+<CODE> "%="          { return ASS_MOD;}
+<CODE> "+="          { return ASS_PLUS;}
+<CODE> "-="          { return ASS_MINUS;}
+<CODE> "<<="         { return ASS_SHL;}
+<CODE> ">>="         { return ASS_SHR;}
+<CODE> "&="          { return ASS_AND;}
+<CODE> "|="          { return ASS_OR;}
+<CODE> "^="          { return ASS_XOR;}
+<CODE> "+"           { return PLUS;}
+<CODE> "-"           { return MINUS;}
+<CODE> "~"           { return NOT;}
+<CODE> "*"           { return MUL;}
+<CODE> "/"           { return DIV;}
+<CODE> "%"           { return MOD;}
+<CODE> "<<"          { return SHL;}
+<CODE> ">>"          { return SHR;}
+<CODE> "sizeof"      { return SIZEOF;}
+<CODE> "bitsizeof"   { return BITSIZEOF;}
+<CODE> "lengthof"    { return LENGTHOF;}
+<CODE> "is"          { return IS;}
+<CODE> "sum"         { return SUM;}
+<CODE> "?"           { return QUESTION;}
+<CODE> "forall"      { return FORALL;}
+<CODE> "package"     { return PACKAGE;}
+<CODE> "import"      { return IMPORT;}
+<CODE> [_a-zA-Z][_a-zA-Z0-9]* { return ID; } 
+<CODE> [^]           { return UNKNOWN_LEXEME; }
 
 <CODE> "//"	     { YYSETCONDITION(yycCPPCOMMENT); goto yyc_CPPCOMMENT; }
 <CODE> "/*" [^ast]   { YYSETCONDITION(yycCCOMMENT); goto yyc_CCOMMENT; }
 
 
-<CPPCOMMENT> new_line  { lexeme->line_no++; YYSETCONDITION(yycCODE); goto yyc_CODE; }
-<CPPCOMMENT> EOF       { return eEND_OF_FILE; }
+<CPPCOMMENT> new_line  { scan_inc_line(ss); YYSETCONDITION(yycCODE); goto yyc_CODE; }
+<CPPCOMMENT> EOF       { return END_OF_FILE; }
 <CPPCOMMENT> [^]       { goto yyc_CPPCOMMENT; }
 
-<CCOMMENT> new_line  { lexeme->line_no++;  goto yyc_CCOMMENT; }
-<CCOMMENT> EOF       { return eEND_OF_FILE; }
+<CCOMMENT> new_line  { scan_inc_line(ss);  goto yyc_CCOMMENT; }
+<CCOMMENT> EOF       { return END_OF_FILE; }
 <CCOMMENT> [^]       { goto yyc_CCOMMENT; }
-<CCOMMENT> "*/"      { lexeme->line_no++; YYSETCONDITION(yycCODE); goto yyc_CODE; }
+<CCOMMENT> "*/"      { scan_inc_line(ss); YYSETCONDITION(yycCODE); goto yyc_CODE; }
  
  
 <STRING> "\\\""     { goto yyc_STRING; }
-<STRING> ["]        { YYSETCONDITION(yycCODE); return eSTRING; }
-<STRING> EOF        { return eUNTERMINATED_STRING; }
+<STRING> ["]        { YYSETCONDITION(yycCODE); return STRING; }
+<STRING> EOF        { return UNTERMINATED_STRING; }
 <STRING> [^]        { goto yyc_STRING; }
 */
 }
+
+
+
+scanstate* datascript_scanner_attach(scanstate *ss)
+{
+	if(ss) 
+	{
+		ss->state = scanner_start;
+		ss->line = 1;
+	}
+
+	return ss;
+}
+
 

@@ -21,7 +21,7 @@
 * Also see scanstate_reset() and dynscan_create().
 */
 
-void scanstate_init(scanstate *ss, const char *bufptr, size_t bufsiz)
+void scanstate_init(scanstate *ss, const char *bufptr, size_t bufsiz, int buffer_owner)
 {
     ss->cursor = bufptr;
     ss->limit = bufptr;
@@ -37,6 +37,7 @@ void scanstate_init(scanstate *ss, const char *bufptr, size_t bufsiz)
     ss->state = NULL;
     ss->userref = NULL;
     ss->userproc = NULL;
+	ss->buffer_owner = buffer_owner;
 }
 
 
@@ -74,27 +75,32 @@ void scanstate_reset(scanstate *ss)
 * Remember to call dynscan_free() when you're done scanning.
 */
 
-scanstate* dynscan_create(size_t bufsiz)
+scanstate* dynscan_create(size_t bufsiz, int buffer_owner)
 {
     scanstate *ss;
     char *bufptr;
     
     ss = malloc(sizeof(scanstate));
-    if(!ss) {
+    if(!ss) 
+	{
         return NULL;
     }
 
-    if(bufsiz) {
+    if(bufsiz) 
+	{
         bufptr = malloc(bufsiz);
-        if(!bufptr) {
+        if(!bufptr) 
+		{
             free(ss);
             return NULL;
         }
-    } else {
+    } 
+	else 
+	{
         bufptr = 0;
     }
 
-    scanstate_init(ss, bufptr, bufsiz);
+    scanstate_init(ss, bufptr, bufsiz, buffer_owner);
     return ss;
 }
 
@@ -104,7 +110,8 @@ scanstate* dynscan_create(size_t bufsiz)
 
 void dynscan_free(scanstate *ss)
 {
-    if(ss->bufptr) {
+    if(ss->bufptr && ss->buffer_owner) 
+	{
         free((void*)ss->bufptr);
     }
 

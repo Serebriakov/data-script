@@ -194,7 +194,7 @@ scanstate* readfd_open(const char *path, size_t bufsiz)
     return NULL;
   }
 
-  ss = dynscan_create(bufsiz);
+  ss = dynscan_create(bufsiz, 1);
   if(!ss) {
     close(fd);
     return NULL;
@@ -227,7 +227,7 @@ scanstate* readfp_open(const char *path, size_t bufsiz)
   }
 
   /* create the dynamic scanstate */
-  ss = dynscan_create(bufsiz);
+  ss = dynscan_create(bufsiz, 1);
   if(!ss) {
     fclose(fp);
     return NULL;
@@ -264,7 +264,7 @@ static ssize_t readmem_read(scanstate *ss)
 
 scanstate* readmem_init(scanstate *ss, const char *data, size_t len)
 {
-  scanstate_init(ss, data, len);
+  scanstate_init(ss, data, len, 0);
   ss->limit = ss->bufptr + ss->bufsiz;
   ss->read = readmem_read;
   return ss;
