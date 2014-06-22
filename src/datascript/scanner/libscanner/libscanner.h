@@ -58,6 +58,10 @@ struct scanstate {
 
   const char *marker; 
 
+  /* Used internally by re2c engine to handle backtracking.
+  This is the same as re2c's YYCTXMARKER. */
+  const char* ctxmarker;
+
   /* The start of the current token. */
   const char *token;  
 
@@ -111,6 +115,7 @@ typedef struct scanstate scanstate;
 #define YYCURSOR    (ss->cursor)
 #define YYLIMIT     (ss->limit)
 #define YYMARKER    (ss->marker)
+#define YYCTXMARKER (ss->ctxmarker)
 
 /** Fills the scan buffer with more data.
  *

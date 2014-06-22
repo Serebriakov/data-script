@@ -37,16 +37,15 @@ ws                   = [ \t\v\f];
 ast                  = "*"; 
 new_line             = "\r\n" | "\n" | "\r";
 atmosphere           = new_line+ | ws+ | EOF;
- 
+identifier_start     = [_a-zA-Z];
+identifier           = identifier_start [_a-zA-Z0-9]* ; 
+decimal_num          = [1-9] digit*;
 
 <CODE> new_line      { scan_inc_line(ss);  goto yyc_CODE; }
 <CODE> ws+           { return WHITESPACE; }
 <CODE> ["]           { YYSETCONDITION(yycSTRING); goto yyc_STRING; }
 <CODE> EOF           { return END_OF_FILE; }
-<CODE> "0" [xX] hex+ { return HEX_NUMBER; }
-<CODE> "0"  oct+     { return OCTAL_NUMBER; }
-<CODE> [01]+ [bB]    { return BINARY_NUMBER; }
-<CODE> [1-9] digit*  { return DECIMAL_NUMBER; }
+
 <CODE> "int8"        { return INT8; }
 <CODE> "int16"       { return INT16; }
 <CODE> "int32"       { return INT32; }
@@ -111,7 +110,23 @@ atmosphere           = new_line+ | ws+ | EOF;
 <CODE> "forall"      { return FORALL;}
 <CODE> "package"     { return PACKAGE;}
 <CODE> "import"      { return IMPORT;}
-<CODE> [_a-zA-Z][_a-zA-Z0-9]* { return ID; } 
+<CODE> identifier    { return ID; } 
+
+<CODE> "0" [xX] hex+  { return HEX_NUMBER; }
+<CODE> "0" [xX] hex+ / identifier_start { return UNKNOWN_LEXEME; }
+
+<CODE> "0"  oct+      { return OCTAL_NUMBER; }
+<CODE> "0"  oct+     / identifier_start { return UNKNOWN_LEXEME; } 
+
+<CODE> [01]+ [bB]     { return BINARY_NUMBER; }
+<CODE> [01]+ [bB]    / identifier_start { return UNKNOWN_LEXEME; } 
+
+<CODE> decimal_num    { return DECIMAL_NUMBER; }
+<CODE> decimal_num / identifier_start   { return UNKNOWN_LEXEME; }
+
+
+
+
 <CODE> [^]           { return UNKNOWN_LEXEME; }
 
 <CODE> "//"	     { YYSETCONDITION(yycCPPCOMMENT); goto yyc_CPPCOMMENT; }

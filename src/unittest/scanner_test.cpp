@@ -44,6 +44,7 @@
   }  
 
 // ================================================================================
+
 SIMPLE_LEXER_TEST (eWHITESPACE    , " ")
 
 SIMPLE_LEXER_TEST (eDECIMAL_NUMBER, "123")
@@ -53,7 +54,6 @@ SIMPLE_LEXER_TEST (eBINARY_NUMBER , "10101b")
 
 SIMPLE_LEXER_TEST (eSTRING        , "\"string\"")
 SIMPLE_LEXER_TEST (eSTRING        , "\"\"")
-
 
 SIMPLE_LEXER_TEST (eUINT8         , "uint8")
 SIMPLE_LEXER_TEST (eUINT16        , "uint16")
@@ -130,7 +130,10 @@ SIMPLE_LEXER_TEST (eFORALL, "forall")
 SIMPLE_LEXER_TEST (ePACKAGE, "package")
 SIMPLE_LEXER_TEST (eIMPORT, "import")
 
-
-
 SIMPLE_LEXER_TEST_ERR ("$")
+
+SIMPLE_LEXER_TEST_ERR ("12as")
+SIMPLE_LEXER_TEST_ERR ("0x12as")
+SIMPLE_LEXER_TEST_ERR ("07as")
+SIMPLE_LEXER_TEST_ERR ("01bas")
 

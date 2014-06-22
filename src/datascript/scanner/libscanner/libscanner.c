@@ -26,6 +26,7 @@ void scanstate_init(scanstate *ss, const char *bufptr, size_t bufsiz, int buffer
     ss->cursor = bufptr;
     ss->limit = bufptr;
     ss->marker = NULL;
+	ss->ctxmarker = NULL;
     ss->token = bufptr;
     ss->line = 0;
     ss->last_read = 1;
@@ -59,6 +60,7 @@ void scanstate_reset(scanstate *ss)
     ss->cursor = ss->bufptr;
     ss->limit = ss->bufptr;
     ss->marker = NULL;
+	ss->ctxmarker = NULL;
     ss->token = ss->bufptr;
     ss->line = 0;
     ss->last_read = 1;
