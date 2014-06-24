@@ -154,6 +154,8 @@ const char* token_to_string (token_t token)
       return "ERROR: unterminated string";
     case eUNKNOWN_LEXEME:
       return "ERROR: unknown lexeme";
+    case eIO_ERROR:
+      return "I/O error";
     };
 #ifdef __clang__
 #pragma clang diagnostic push

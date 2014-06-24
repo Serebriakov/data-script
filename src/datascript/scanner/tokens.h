@@ -75,6 +75,7 @@
 #define END_OF_FILE			72
 #define UNTERMINATED_STRING 73
 #define UNKNOWN_LEXEME		74 
+#define IO_ERROR                75
 
 #endif
 

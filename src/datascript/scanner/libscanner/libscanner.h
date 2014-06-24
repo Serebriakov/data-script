@@ -139,7 +139,7 @@ typedef struct scanstate scanstate;
 
 #define YYFILL(n)   do {					       \
     if(ss->last_read > 0) ss->last_read = (*ss->read)(ss);	       \
-    if(ss->last_read < 0) return ss->last_read;			       \
+    if(ss->last_read < 0) return YYFILL_IO_ERROR;			\
     if((ss)->cursor >= (ss)->limit) return YYFILL_EOF;			       \
   } while(0);
 

@@ -83,7 +83,7 @@ enum token_t
 	eEND_OF_FILE = END_OF_FILE,
 	eUNTERMINATED_STRING = UNTERMINATED_STRING,
 	eUNKNOWN_LEXEME = UNKNOWN_LEXEME,
-	eIO_ERROR
+	eIO_ERROR = IO_ERROR
 };
 
 const char* token_to_string (token_t token);

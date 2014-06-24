@@ -1,6 +1,9 @@
 #define YYFILL_EOF END_OF_FILE
+#define YYFILL_IO_ERROR IO_ERROR
 #include "datascript/scanner/tokens.h"
 #include "datascript/scanner/libscanner/libscanner.h"
+
+scanstate* datascript_scanner_attach(scanstate *ss);
 
 
 #define YYGETCONDITION() currentCondition
