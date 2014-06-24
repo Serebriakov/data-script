@@ -21,10 +21,13 @@ set (libscanner_hdr
   scanner/libscanner/reader.h
 )
 # -------------------------------------------------
-set (generic_src)
+set (generic_src
+  ${CMAKE_CURRENT_BINARY_DIR}/dsparser.c
+)
 set (generic_hdr
 	compiler.h
 	datascript_api.h
+	${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
 )
 
 # ========================
@@ -66,13 +69,12 @@ foreach (m ${modules})
 endforeach ()
 
 
-   
-onyx_shared_lib (datascript src hdr)
-
 if (WINDOWS)
 	set (RE2C ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/re2c-bin.exe)
+	set (LEMON ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lemon-bin.exe)
 else ()
 	set (RE2C ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/re2c-bin)
+	set (LEMON ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lemon-bin)
 endif ()
 
 ADD_CUSTOM_COMMAND(
@@ -80,5 +82,17 @@ ADD_CUSTOM_COMMAND(
    COMMAND ${RE2C} -cbs -o ${scanner_generated} ${scanner_input}
    DEPENDS re2c-bin ${scanner_input}
    )
-ADD_CUSTOM_TARGET(scanner ALL DEPENDS ${scanner_generated})
+
+ADD_CUSTOM_COMMAND (
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/dsparser.c ${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
+  COMMAND ${LEMON} -q ${CMAKE_CURRENT_SOURCE_DIR}/parser/dsparser.y -T${CMAKE_SOURCE_DIR}/src/tools/lemon/lempar.c
+  COMMAND cmake -E rename ${CMAKE_CURRENT_SOURCE_DIR}/parser/dsparser.c ${CMAKE_CURRENT_BINARY_DIR}/dsparser.c
+  COMMAND cmake -E rename ${CMAKE_CURRENT_SOURCE_DIR}/parser/dsparser.h ${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
+  DEPENDS lemon-bin ${CMAKE_SOURCE_DIR}/src/tools/lemon/lempar.c ${CMAKE_CURRENT_SOURCE_DIR}/parser/dsparser.y
+)
+
+   
+onyx_shared_lib (datascript src hdr)
+
+#ADD_CUSTOM_TARGET(scanner ALL DEPENDS ${scanner_generated})
 

@@ -174,3 +174,5 @@ if (MSVC)
 endif ()
 
 add_executable (re2c-bin ${src})
+
+EXPORT(TARGETS re2c-bin FILE ${CMAKE_BINARY_DIR}/import_re2c.cmake)
