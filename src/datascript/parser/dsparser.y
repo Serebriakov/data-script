@@ -11,7 +11,14 @@
 #pragma clang diagnostic ignored "-Wunused-macros"
 #pragma clang diagnostic ignored "-Wmissing-prototypes"
 #pragma clang diagnostic ignored "-Wunused-parameter"
+
+#elif defined(__GNUC__) 
+	#if (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 6)
+		#pragma GCC diagnostic ignored "-Wmissing-prototypes"
+		#pragma GCC diagnostic ignored "-Wunused-parameter"	
+	#endif
 #endif
+
 
 }  
     
