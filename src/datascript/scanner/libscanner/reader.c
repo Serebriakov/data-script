@@ -81,10 +81,10 @@ static ssize_t readfp_read(scanstate *ss)
   ss->limit += n;
 
   if(n == 0) {
-    if(feof(ss->readref)) {
+    if(feof((FILE*)ss->readref)) {
       return 0;
     }
-    if(ferror(ss->readref)) {
+	if (ferror ((FILE*)ss->readref)) {
       return -1;
     }
        

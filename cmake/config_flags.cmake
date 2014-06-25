@@ -205,7 +205,7 @@ endmacro ()
 # ======================================================================
 if (ONYX_TOOLSET STREQUAL "intel")
   config_compile_and_linker_flags_name (IPP ICC)
-elseif (ONYX_TOOLSET STREQUAL "gcc44" OR ONYX_TOOLSET STREQUAL "gcc45" OR ONYX_TOOLSET STREQUAL "gcc46" OR ONYX_TOOLSET STREQUAL "gcc47")
+elseif (ONYX_TOOLSET STREQUAL "gcc44" OR ONYX_TOOLSET STREQUAL "gcc45" OR ONYX_TOOLSET STREQUAL "gcc46" OR ONYX_TOOLSET STREQUAL "gcc47" OR ONYX_TOOLSET STREQUAL "gcc48")
   config_compile_and_linker_flags_name (GPP GCC)
 elseif (ONYX_TOOLSET STREQUAL "vc80" OR ONYX_TOOLSET STREQUAL "vc90" OR ONYX_TOOLSET STREQUAL "vc11" OR ONYX_TOOLSET STREQUAL "vc10" OR ONYX_TOOLSET STREQUAL "vc12")
   config_compile_and_linker_flags_name (MSVC_CXX MSVC_CC)
