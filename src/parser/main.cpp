@@ -1,42 +1,50 @@
+#include <stdio.h>
 #include <string>
 #include <iostream>
 #include "datascript/scanner/lexer.hpp"
-
-static const char* txt = "0xDEADBEEF\n"
-  "076\n"
-  "123\n"
-  "01011b"
-  "\"zopa \n popa\"\n"
-  "int8 int16 int32 int64\n"
-  "uint8 uint16 uint32 uint64\n"
-  "MySequence\n"
-  "{\n"
-    "bit:4    a;\n"
-    "uint8    b;\n"
-    "bit:4    c;\n"
-  "};";
-
+#include "datascript/parser/parser.h"
 
 
 int main (int argc, char* argv [])
 {
-  std::cout << txt << std::endl;
+  if (argc != 2)
+    {
+      std::cout << "USAGE: " << argv [0] << " <infile>" << std::endl;
+      return 0;
+    }
   
-  DATASCRIPT_SCANNER_NS lexer ds_scanner (txt);
+  datascript_parserTrace (stderr, "--yy-- ");
+
+  const char* fname = argv [1];
+  FILE* f = fopen (fname, "rb");
+
+  DATASCRIPT_SCANNER_NS lexer ds_scanner (f);
+  DATASCRIPT_SCANNER_NS parser ds_parser;
   while (true)
     {
 	  const char* s = 0;
 	  const char* e = 0;
 	  
 	  DATASCRIPT_SCANNER_NS token_t tok = ds_scanner.scan (s, e);
-	  std::string lex (s, e);
-      std::cout << tok << " --- " << lex << std::endl;
+	  
+	  if (tok == DATASCRIPT_SCANNER_NS eEND_OF_FILE)
+	    {
+	      ds_parser.finish ();
+	      break;
+	    }
 
 	  if (tok >= DATASCRIPT_SCANNER_NS eEND_OF_FILE)
-	{
-	  break;
-	}
+	    {
+	      break;
+	    }
+	  if (tok == DATASCRIPT_SCANNER_NS eWHITESPACE)
+	    {
+	      continue;
+	    }
+	  // std::string str (s,e);
+	  //std::cout <<"[" << tok << " -- " << str << "]" << std::endl;
+	  ds_parser (tok, s, e);
     }
-  
+  fclose (f);
   return 0;
 }

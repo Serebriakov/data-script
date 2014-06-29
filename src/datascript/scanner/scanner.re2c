@@ -40,8 +40,8 @@ ws                   = [ \t\v\f];
 ast                  = "*"; 
 new_line             = "\r\n" | "\n" | "\r";
 atmosphere           = new_line+ | ws+ | EOF;
-identifier_start     = [_a-zA-Z];
-identifier           = identifier_start [_a-zA-Z0-9]* ; 
+identifier_start     = [_a-zA-Z\.];
+identifier           = identifier_start [_a-zA-Z0-9\.]* ; 
 decimal_num          = [1-9] digit*;
 
 <CODE> new_line      { scan_inc_line(ss);  goto yyc_CODE; }

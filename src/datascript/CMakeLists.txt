@@ -21,8 +21,20 @@ set (libscanner_hdr
   scanner/libscanner/reader.h
 )
 # -------------------------------------------------
-set (generic_src
+set (parser_src
   ${CMAKE_CURRENT_BINARY_DIR}/dsparser.c
+  parser/parser.cpp
+  parser/ast.cpp
+)
+# -------------------------------------------------
+set (parser_hdr
+  ${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
+  parser/parser.h
+  parser/ast.h
+)
+# -------------------------------------------------
+set (generic_src
+  
 )
 set (generic_hdr
 	compiler.h
@@ -38,6 +50,7 @@ set (modules
 	generic
 	scanner
 	libscanner
+	parser
 )
 
 if (WIN32)
@@ -91,7 +104,8 @@ ADD_CUSTOM_COMMAND (
   DEPENDS lemon-bin ${CMAKE_SOURCE_DIR}/src/tools/lemon/lempar.c ${CMAKE_CURRENT_SOURCE_DIR}/parser/dsparser.y
 )
 
-   
+include_directories (${CMAKE_CURRENT_BINARY_DIR})   
+
 onyx_shared_lib (datascript src hdr)
 
 #ADD_CUSTOM_TARGET(scanner ALL DEPENDS ${scanner_generated})
