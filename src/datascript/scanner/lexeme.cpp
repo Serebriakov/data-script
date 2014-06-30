@@ -148,6 +148,8 @@ const char* token_to_string (token_t token)
       return "PACKAGE";
     case eIMPORT:
       return "IMPORT";
+	case eDOT:
+		return "DOT";
     case eEND_OF_FILE:
       return "END-OF-FILE";
     case eUNTERMINATED_STRING:

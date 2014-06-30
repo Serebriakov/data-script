@@ -72,10 +72,11 @@
 #define FORALL				69
 #define PACKAGE				70
 #define IMPORT				71
-#define END_OF_FILE			72
-#define UNTERMINATED_STRING 73
-#define UNKNOWN_LEXEME		74 
-#define IO_ERROR                75
+#define DOT                 72
+#define END_OF_FILE			73
+#define UNTERMINATED_STRING 74
+#define UNKNOWN_LEXEME		75 
+#define IO_ERROR            76
 
 #endif
 

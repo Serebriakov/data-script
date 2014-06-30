@@ -46,7 +46,12 @@ static ssize_t read_shiftbuf(scanstate *ss)
 
   /* this tells how many bytes need to be shifted. */
   cnt = ss->limit - min;
-  if(cnt) {
+  if(cnt) 
+  {
+	 if (ss->signal_invalidate)
+	  {
+		  ss->signal_invalidate (ss->signal_invalidate_ctx);
+	  }
     ssize_t delta = min - ss->bufptr;
     memmove((void*)ss->bufptr, min, (size_t)cnt);
     ss->cursor -= delta;

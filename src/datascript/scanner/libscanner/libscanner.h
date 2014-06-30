@@ -44,6 +44,8 @@ typedef ssize_t (DATASCRIPT_CALLSPEC *readproc)(struct scanstate *ss);
  */
 typedef int (DATASCRIPT_CALLSPEC *scanproc)(struct scanstate *ss);
 
+typedef void (DATASCRIPT_CALLSPEC *signal_invalidate_proc)(void* ctx);
+
 struct scanstate {
   /* The current character being looked at by the scanner.  
      This is the same as re2c's YYCURSOR. */
@@ -102,6 +104,9 @@ struct scanstate {
      It could be used to associate a parser with this scanstate.
   */
     void *userref;      
+
+	signal_invalidate_proc signal_invalidate;
+	void* signal_invalidate_ctx;
 
   /* Never touched by any re2c routines.  See scanstate::userref. */
     void *userproc;     

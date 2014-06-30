@@ -5,6 +5,7 @@
 
 #include "datascript/datascript_api.h"
 #include "datascript/scanner/lexeme.hpp"
+#include "datascript/scanner/tokens_storage.h"
 
 struct scanstate;
 
@@ -25,8 +26,11 @@ public:
 
   ~lexer ();
   token_t scan (char_ptr_t& begin, char_ptr_t& end);
+  _parser_token* scan (token_t& token_id);
+
 private:
 	scanstate* ss;
+	_tokens_storage* storage;
 };
 
 DATASCRIPT_SCANNER_NS_END

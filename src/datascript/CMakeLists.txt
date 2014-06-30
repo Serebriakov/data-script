@@ -4,11 +4,13 @@ set (scanner_input ${CMAKE_CURRENT_SOURCE_DIR}/scanner/scanner.re2c)
 set (scanner_src 
   scanner/lexer.cpp
   scanner/lexeme.cpp
+  scanner/tokens_storage.cpp
   ${scanner_generated}
   )
 
 set (scanner_hdr 
   scanner/tokens.h 
+  scanner/tokens_storage.h
   scanner/lexeme.hpp
   scanner/lexer.hpp)
 # -------------------------------------------------
@@ -29,17 +31,19 @@ set (parser_src
 # -------------------------------------------------
 set (parser_hdr
   ${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
-  parser/parser.h
+  parser/parser.hpp
+  parser/parserfwd.h
   parser/ast.h
 )
 # -------------------------------------------------
 set (generic_src
-  
+  ast_builder.cpp
 )
+
 set (generic_hdr
 	compiler.h
 	datascript_api.h
-	${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
+	ast_builder.hpp
 )
 
 # ========================

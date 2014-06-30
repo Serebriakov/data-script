@@ -40,15 +40,15 @@ ws                   = [ \t\v\f];
 ast                  = "*"; 
 new_line             = "\r\n" | "\n" | "\r";
 atmosphere           = new_line+ | ws+ | EOF;
-identifier_start     = [_a-zA-Z\.];
-identifier           = identifier_start [_a-zA-Z0-9\.]* ; 
+identifier_start     = [_a-zA-Z];
+identifier           = identifier_start [_a-zA-Z0-9]* ; 
 decimal_num          = [1-9] digit*;
 
 <CODE> new_line      { scan_inc_line(ss);  goto yyc_CODE; }
 <CODE> ws+           { return WHITESPACE; }
 <CODE> ["]           { YYSETCONDITION(yycSTRING); goto yyc_STRING; }
 <CODE> EOF           { return END_OF_FILE; }
-
+<CODE> "."           { return DOT; }
 <CODE> "int8"        { return INT8; }
 <CODE> "int16"       { return INT16; }
 <CODE> "int32"       { return INT32; }
