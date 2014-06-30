@@ -54,6 +54,7 @@ class DATASCRIPT_API parser
 
   void operator () (token_t token, const char* begin, const char* end);
   void finish ();
+  void enable_debug (FILE* fp, const char* prefix);
  private:
   parser (const parser& );
   parser& operator = (const parser& );

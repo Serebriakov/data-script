@@ -54,6 +54,11 @@ void parser::finish ()
 {
   datascript_parser (m_lemon_parser, 0, 0, 0);
 }
+// --------------------------------------------------------------------
+void parser::enable_debug (FILE* fp, const char* prefix)
+{
+	datascript_parserTrace (fp, prefix);
+}
 
 DATASCRIPT_SCANNER_NS_END
 

@@ -13,13 +13,14 @@ int main (int argc, char* argv [])
       return 0;
     }
   
-  datascript_parserTrace (stderr, "--yy-- ");
-
+  
   const char* fname = argv [1];
   FILE* f = fopen (fname, "rb");
 
   DATASCRIPT_SCANNER_NS lexer ds_scanner (f);
   DATASCRIPT_SCANNER_NS parser ds_parser;
+  ds_parser.enable_debug (stderr, "--yy-- ");
+
   while (true)
     {
 	  const char* s = 0;
