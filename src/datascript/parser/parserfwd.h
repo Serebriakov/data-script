@@ -6,7 +6,7 @@
 #include <stdio.h>
 #endif
 
-#include "datascript/parser/ast.h"
+#include "datascript/parser/parser_procs.h"
 
 
 #if defined(__cplusplus)

@@ -26,24 +26,26 @@ set (libscanner_hdr
 set (parser_src
   ${CMAKE_CURRENT_BINARY_DIR}/dsparser.c
   parser/parser.cpp
-  parser/ast.cpp
+  parser/parser_procs.cpp
 )
 # -------------------------------------------------
 set (parser_hdr
   ${CMAKE_CURRENT_BINARY_DIR}/dsparser.h
   parser/parser.hpp
   parser/parserfwd.h
-  parser/ast.h
+  parser/parser_procs.h
 )
 # -------------------------------------------------
 set (generic_src
   ast_builder.cpp
+  syntax_tree.cpp
 )
 
 set (generic_hdr
 	compiler.h
 	datascript_api.h
 	ast_builder.hpp
+	syntax_tree.hpp
 )
 
 # ========================

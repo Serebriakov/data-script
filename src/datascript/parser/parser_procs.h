@@ -1,5 +1,5 @@
-#ifndef __DATASCRIPT_PARSER_AST_H__
-#define __DATASCRIPT_PARSER_AST_H__
+#ifndef __DATASCRIPT_PARSER_PROCS_H__
+#define __DATASCRIPT_PARSER_PROCS_H__
 
 struct _ast;
 struct _parser_token;
@@ -26,7 +26,13 @@ extern "C" {
 	/* AST API */
 	/* =============================================================== */
 	
+	ast* ast_create ();
+	void ast_free (ast* victim);
+
+	void* ast_content (ast* obj);
+
 	void ast_define_package (struct _ast* ast, const qname* name);
+	void ast_import (struct _ast* ast, const qname* name);
 
 #if defined(__cplusplus)
 }

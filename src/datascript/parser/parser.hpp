@@ -3,6 +3,7 @@
 
 #include "datascript/datascript_api.h"
 #include "datascript/scanner/lexeme.hpp"
+#include "datascript/parser/parser_procs.h"
 
 struct _parser_token;
 
@@ -11,7 +12,7 @@ DATASCRIPT_SCANNER_NS_BEGIN
 class DATASCRIPT_API parser 
 {
  public:
-  parser ();
+  parser (ast* state);
   ~parser ();
 
   void operator () (token_t token, _parser_token* pt);
@@ -22,6 +23,7 @@ class DATASCRIPT_API parser
   parser& operator = (const parser& );
  private:
   void* m_lemon_parser;
+  ast* m_state;
 };
 
 DATASCRIPT_SCANNER_NS_END

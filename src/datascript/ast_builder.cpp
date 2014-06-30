@@ -4,7 +4,7 @@
 
 DATASCRIPT_SCANNER_NS_BEGIN
 
-static ast* build_ast (lexer& ds_lexer, parser& ds_parser)
+static void build_ast (lexer& ds_lexer, parser& ds_parser)
 {
 	while (true)
 	{
@@ -24,23 +24,30 @@ static ast* build_ast (lexer& ds_lexer, parser& ds_parser)
 			break;
 		}
 	}
-	return 0;
 }
 // ----------------------------------------------------------------
-ast* build_ast (FILE* fp)
+syntax_tree* build_ast (FILE* fp)
 {
 	lexer ds_scanner (fp);
-	parser ds_parser;
-	ds_parser.enable_debug (stderr, "--yy-- ");
-	return build_ast (ds_scanner, ds_parser);
+	ast* state = ast_create ();
+	parser ds_parser (state);
+	//ds_parser.enable_debug (stderr, "--yy-- ");
+	build_ast (ds_scanner, ds_parser);
+	syntax_tree* result = (syntax_tree*)ast_content (state);
+	ast_free (state);
+	return result;
 }
 // ----------------------------------------------------------------
-ast* build_ast (const char* text)
+syntax_tree* build_ast (const char* text)
 {
 	lexer ds_scanner (text);
-	parser ds_parser;
+	ast* state = ast_create ();
+	parser ds_parser (state);
 	ds_parser.enable_debug (stderr, "--yy-- ");
-	return build_ast (ds_scanner, ds_parser);
+	build_ast (ds_scanner, ds_parser);
+	syntax_tree* result = (syntax_tree*)ast_content (state);
+	ast_free (state);
+	return result;
 }
 
 DATASCRIPT_SCANNER_NS_END

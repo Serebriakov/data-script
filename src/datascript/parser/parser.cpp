@@ -9,7 +9,8 @@
 
 DATASCRIPT_SCANNER_NS_BEGIN
 
-parser::parser ()
+parser::parser (ast* state)
+: m_state (state)
 {
 	m_lemon_parser = datascript_parserAlloc (malloc);
 }
@@ -41,7 +42,9 @@ void parser::operator () (token_t token, _parser_token* pt)
 	case eEND_OF_FILE:
 		lemon_token = DS_END_OF_FILE;
 		break;
-		
+	case eIMPORT:
+		lemon_token = DS_IMPORT;
+		break;
 	default:
 	{
 		std::ostringstream os;
@@ -50,7 +53,7 @@ void parser::operator () (token_t token, _parser_token* pt)
 	}
 	};
 
-	datascript_parser (m_lemon_parser, lemon_token, pt, 0);
+	datascript_parser (m_lemon_parser, lemon_token, pt, m_state);
 
 }
 // --------------------------------------------------------------------

@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include "datascript/datascript_api.h"
-#include "datascript/parser/ast.h"
+#include "datascript/syntax_tree.hpp"
 
 DATASCRIPT_SCANNER_NS_BEGIN
 
-DATASCRIPT_API ast* build_ast (FILE* fp);
-DATASCRIPT_API ast* build_ast (const char* text);
+DATASCRIPT_API syntax_tree* build_ast (FILE* fp);
+DATASCRIPT_API syntax_tree* build_ast (const char* text);
 
 DATASCRIPT_SCANNER_NS_END
 

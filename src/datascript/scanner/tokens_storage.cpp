@@ -11,6 +11,7 @@ struct _parser_token
 	const char* begin;
 	const char* end;
 	struct _tokens_storage* owner;
+	mutable int ref_count;
 };
 
 struct compare_seq
@@ -59,6 +60,7 @@ struct _parser_token* create_parser_token (struct _tokens_storage* ts, int token
 	pt->token_id = token_id;
 	pt->begin = start;
 	pt->end = end;
+	pt->ref_count = 1;
 	ts->tokens.push_back (pt);
 	return pt;
 }
@@ -66,6 +68,11 @@ struct _parser_token* create_parser_token (struct _tokens_storage* ts, int token
 void free_parser_token (struct _parser_token* victim)
 {
 	if (!victim)
+	{
+		return;
+	}
+	victim->ref_count--;
+	if (victim->ref_count > 0)
 	{
 		return;
 	}
@@ -109,4 +116,9 @@ int get_token_data (const struct _parser_token* tok, const char** begin, const c
 	*begin = tok->begin;
 	*end = tok->end;
 	return tok->token_id;
+}
+// ---------------------------------------------------------------------------
+void addref_parser_token (const struct _parser_token* tok)
+{
+	tok->ref_count++;
 }

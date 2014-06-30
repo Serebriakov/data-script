@@ -15,8 +15,8 @@ int main (int argc, char* argv [])
   const char* fname = argv [1];
   FILE* f = fopen (fname, "rb");
 
-  ast* abstract_syntax_tree = DATASCRIPT_SCANNER_NS build_ast (f);
-
+  DATASCRIPT_SCANNER_NS syntax_tree* abstract_syntax_tree = DATASCRIPT_SCANNER_NS build_ast (f);
+  delete abstract_syntax_tree;
   fclose (f);
   return 0;
 }
