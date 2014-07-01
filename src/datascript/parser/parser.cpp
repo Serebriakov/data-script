@@ -7,65 +7,70 @@
 
 #include "dsparser.h"
 
-DATASCRIPT_SCANNER_NS_BEGIN
 
-parser::parser (ast* state)
-: m_state (state)
+namespace datascript
 {
-	m_lemon_parser = datascript_parserAlloc (malloc);
-}
-// --------------------------------------------------------------------
-parser::~parser ()
-{
-	datascript_parserFree (m_lemon_parser, free);
-}
-// --------------------------------------------------------------------
-void parser::operator () (token_t token, _parser_token* pt)
-{
-
-	int lemon_token = -1;
-
-	switch (token)
+	namespace analyzer
 	{
-	case ePACKAGE:
-		lemon_token = DS_PACKAGE;
-		break;
-	case eID:
-		lemon_token = DS_ID;
-		break;
-	case eSEMICOLON:
-		lemon_token = DS_SEMICOLON;
-		break;
-	case eDOT:
-		lemon_token = DS_DOT;
-		break;
-	case eEND_OF_FILE:
-		lemon_token = DS_END_OF_FILE;
-		break;
-	case eIMPORT:
-		lemon_token = DS_IMPORT;
-		break;
-	default:
-	{
-		std::ostringstream os;
-		os << "UNMAPPED TOKEN: " << token;
-		throw std::runtime_error (os.str ());
-	}
-	};
+		parser::parser (ast* state)
+			: m_state (state)
+		{
+			m_lemon_parser = datascript_parserAlloc (malloc);
+		}
+		// --------------------------------------------------------------------
+		parser::~parser ()
+		{
+			datascript_parserFree (m_lemon_parser, free);
+		}
+		// --------------------------------------------------------------------
+		void parser::operator () (scanner::token_t token, _parser_token* pt)
+		{
 
-	datascript_parser (m_lemon_parser, lemon_token, pt, m_state);
+			int lemon_token = -1;
 
-}
-// --------------------------------------------------------------------
-void parser::finish ()
-{
-	datascript_parser (m_lemon_parser, 0, 0, 0);
-}
-// --------------------------------------------------------------------
-void parser::enable_debug (FILE* fp, const char* prefix)
-{
-	datascript_parserTrace (fp, prefix);
-}
+			switch (token)
+			{
+			case scanner::ePACKAGE:
+				lemon_token = DS_PACKAGE;
+				break;
+			case scanner::eID:
+				lemon_token = DS_ID;
+				break;
+			case scanner::eSEMICOLON:
+				lemon_token = DS_SEMICOLON;
+				break;
+			case scanner::eDOT:
+				lemon_token = DS_DOT;
+				break;
+			case scanner::eEND_OF_FILE:
+				lemon_token = DS_END_OF_FILE;
+				break;
+			case scanner::eIMPORT:
+				lemon_token = DS_IMPORT;
+				break;
+			default:
+			{
+				std::ostringstream os;
+				os << "UNMAPPED TOKEN: " << token;
+				throw std::runtime_error (os.str ());
+			}
+			};
 
-DATASCRIPT_SCANNER_NS_END
+			datascript_parser (m_lemon_parser, lemon_token, pt, m_state);
+
+		}
+		// --------------------------------------------------------------------
+		void parser::finish ()
+		{
+			datascript_parser (m_lemon_parser, 0, 0, 0);
+		}
+		// --------------------------------------------------------------------
+		void parser::enable_debug (FILE* fp, const char* prefix)
+		{
+			datascript_parserTrace (fp, prefix);
+		}
+
+	} // ns analyzer
+} // ns datascript
+
 

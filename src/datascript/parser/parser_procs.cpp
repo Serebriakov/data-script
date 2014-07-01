@@ -9,13 +9,13 @@
 
 struct _ast
 {
-	DATASCRIPT_SCANNER_NS syntax_tree* tree;
+	datascript::grammar::syntax_tree* tree;
 };
 
 ast* ast_create ()
 {
 	ast* r = new ast;
-	r->tree = new DATASCRIPT_SCANNER_NS syntax_tree;
+	r->tree = new datascript::grammar::syntax_tree;
 	return r;
 }
 
@@ -96,7 +96,7 @@ void qname_free (qname* victim)
 // ==================================================================================
 void ast_define_package (struct _ast* ast, const qname* tok)
 {
-	DATASCRIPT_SCANNER_NS package_syntax_tree_builder builder (*ast->tree, (std::size_t)tok->len);
+	datascript::grammar::package_syntax_tree_builder builder (*ast->tree, (std::size_t)tok->len);
 
 	const qname* current = tok;
 	while (current)
@@ -115,9 +115,9 @@ void ast_define_package (struct _ast* ast, const qname* tok)
 // ------------------------------------------------------------------------------------
 void ast_import (struct _ast* ast, const qname* name)
 {
-	DATASCRIPT_SCANNER_NS qualified_name qn;
+	datascript::grammar::qualified_name qn;
 
-	DATASCRIPT_SCANNER_NS qualified_name_builder builder (qn, (std::size_t)name->len);
+	datascript::grammar::qualified_name_builder builder (qn, (std::size_t)name->len);
 
 	const qname* current = name;
 	while (current)

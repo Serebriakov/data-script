@@ -8,7 +8,7 @@
 #define SIMPLE_LEXER_TEST(EXPECTED, EXPR)				\
   TEST_CASE ("SIMPLE_LEXER_TEST_" STRINGIZE(EXPECTED) "_" STRINGIZE (__LINE__), "") \
   {									\
-  USING_DATASCRIPT_SCANNER_NS;\
+  using namespace datascript::scanner;\
     lexer ds_scanner (EXPR);			\
     int k = 0;								\
     while (true)							\
@@ -35,7 +35,7 @@
 #define SIMPLE_LEXER_TEST_ERR(EXPR)					\
   TEST_CASE ("SIMPLE_LEXER_TEST_ERR_" STRINGIZE (__LINE__), "")		\
   {									\
-  USING_DATASCRIPT_SCANNER_NS;\
+  using namespace datascript::scanner;\
     lexer ds_scanner (EXPR);			\
 	const char* s = 0;\
 	const char* e = 0;\

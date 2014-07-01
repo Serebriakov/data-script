@@ -7,25 +7,29 @@
 
 struct _parser_token;
 
-DATASCRIPT_SCANNER_NS_BEGIN
-
-class DATASCRIPT_API parser 
+namespace datascript
 {
- public:
-  parser (ast* state);
-  ~parser ();
+	namespace analyzer
+	{
 
-  void operator () (token_t token, _parser_token* pt);
-  void finish ();
-  void enable_debug (FILE* fp, const char* prefix);
- private:
-  parser (const parser& );
-  parser& operator = (const parser& );
- private:
-  void* m_lemon_parser;
-  ast* m_state;
-};
+		class DATASCRIPT_API parser
+		{
+		public:
+			parser (ast* state);
+			~parser ();
 
-DATASCRIPT_SCANNER_NS_END
+			void operator () (scanner::token_t token, _parser_token* pt);
+			void finish ();
+			void enable_debug (FILE* fp, const char* prefix);
+		private:
+			parser (const parser&);
+			parser& operator = (const parser&);
+		private:
+			void* m_lemon_parser;
+			ast* m_state;
+		};
+
+	} // ns analyzer
+} // ns datascript
 
 #endif

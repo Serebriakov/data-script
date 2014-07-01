@@ -36,6 +36,13 @@ set (parser_hdr
   parser/parser_procs.h
 )
 # -------------------------------------------------
+set (xml_src
+	xml/xml.cpp
+)
+set (xml_hdr
+	xml/xml.hpp
+)
+# -------------------------------------------------
 set (generic_src
   ast_builder.cpp
   syntax_tree.cpp
@@ -57,6 +64,7 @@ set (modules
 	scanner
 	libscanner
 	parser
+	xml
 )
 
 if (WIN32)

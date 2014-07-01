@@ -9,29 +9,32 @@
 
 struct scanstate;
 
-DATASCRIPT_SCANNER_NS_BEGIN
-
-class DATASCRIPT_API lexer
+namespace datascript
 {
-public:
-	enum
+	namespace scanner
 	{
-		DEFAULT_BUFFER_LENGTH = 8192
-	};
+		class DATASCRIPT_API lexer
+		{
+		public:
+			enum
+			{
+				DEFAULT_BUFFER_LENGTH = 8192
+			};
 
-	typedef const char* char_ptr_t;
-public:
-  explicit lexer (FILE* f);
-  explicit lexer (const char* string);
+			typedef const char* char_ptr_t;
+		public:
+			explicit lexer (FILE* f);
+			explicit lexer (const char* string);
 
-  ~lexer ();
-  token_t scan (char_ptr_t& begin, char_ptr_t& end);
-  _parser_token* scan (token_t& token_id);
+			~lexer ();
+			token_t scan (char_ptr_t& begin, char_ptr_t& end);
+			_parser_token* scan (token_t& token_id);
 
-private:
-	scanstate* ss;
-	_tokens_storage* storage;
-};
+		private:
+			scanstate* ss;
+			_tokens_storage* storage;
+		};
 
-DATASCRIPT_SCANNER_NS_END
+	} // ns scanner
+} // ns datascript
 #endif

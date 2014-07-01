@@ -37,8 +37,9 @@ cmdlist ::= ecmd.
 ecmd ::= END_OF_FILE.
 ecmd ::= package_definition .
 ecmd ::= import_stmt .
+/*
 ecmd ::= declaration .
-
+*/
 /* -------------------------------------------------------- */
 
 package_definition ::= PACKAGE qname(A) SEMICOLON. {ast_define_package (ast, A);} 
@@ -48,7 +49,7 @@ package_definition ::= PACKAGE qname(A) SEMICOLON. {ast_define_package (ast, A);
 import_stmt ::= IMPORT qname (A) SEMICOLON. {ast_import (ast, A); }
 
 /* -------------------------------------------------------- */
-
+/*
 declaration ::= const_definition .
 
 const_definition ::= CONST primitive_type(A) ID(B) EQUALS value(C) SEMICOLON. {ast_const_definition (ast, A, B, C);}
@@ -61,9 +62,9 @@ primitive_type ::= UINT8 .
 primitive_type ::= UINT16 .
 primitive_type ::= UINT32 .
 primitive_type ::= UINT64 .
-
+*/
 /* -------------------------------------------------------- */
-
+/*
 %type value { value* }
 %destructor value { value_free ($$); }
 
@@ -71,7 +72,7 @@ value(RESULT) ::= DEC_NUMBER(A) . { RESULT = create_value_numeric (ast, A); }
 value(RESULT) ::= HEX_NUMBER(A) . { RESULT = create_value_numeric (ast, A); }
 value(RESULT) ::= OCT_NUMBER(A) . { RESULT = create_value_numeric (ast, A); }
 value(RESULT) ::= qname(A) .      { RESULT = create_value_qname (ast, A); }
-
+*/
 /* -------------------------------------------------------- */
 
 %type qname { qname* }

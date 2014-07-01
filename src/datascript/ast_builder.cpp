@@ -2,52 +2,51 @@
 #include "datascript/parser/parser.hpp"
 #include "datascript/scanner/lexer.hpp"
 
-DATASCRIPT_SCANNER_NS_BEGIN
-
-static void build_ast (lexer& ds_lexer, parser& ds_parser)
+namespace datascript
 {
-	while (true)
+	static void build_ast (scanner::lexer& ds_lexer, analyzer::parser& ds_parser)
 	{
-		token_t token_type;
-		_parser_token* token = ds_lexer.scan (token_type);
-		if (token_type > eEND_OF_FILE)
+		while (true)
 		{
-			break;
-		}
-		if (token_type == eWHITESPACE)
-		{
-			continue;
-		}
-		ds_parser (token_type, token);
-		if (token_type == eEND_OF_FILE)
-		{
-			break;
+			scanner::token_t token_type;
+			_parser_token* token = ds_lexer.scan (token_type);
+			if (token_type > scanner::eEND_OF_FILE)
+			{
+				break;
+			}
+			if (token_type == scanner::eWHITESPACE)
+			{
+				continue;
+			}
+			ds_parser (token_type, token);
+			if (token_type == scanner::eEND_OF_FILE)
+			{
+				break;
+			}
 		}
 	}
-}
-// ----------------------------------------------------------------
-syntax_tree* build_ast (FILE* fp)
-{
-	lexer ds_scanner (fp);
-	ast* state = ast_create ();
-	parser ds_parser (state);
-	//ds_parser.enable_debug (stderr, "--yy-- ");
-	build_ast (ds_scanner, ds_parser);
-	syntax_tree* result = (syntax_tree*)ast_content (state);
-	ast_free (state);
-	return result;
-}
-// ----------------------------------------------------------------
-syntax_tree* build_ast (const char* text)
-{
-	lexer ds_scanner (text);
-	ast* state = ast_create ();
-	parser ds_parser (state);
-	ds_parser.enable_debug (stderr, "--yy-- ");
-	build_ast (ds_scanner, ds_parser);
-	syntax_tree* result = (syntax_tree*)ast_content (state);
-	ast_free (state);
-	return result;
-}
-
-DATASCRIPT_SCANNER_NS_END
+	// ----------------------------------------------------------------
+	grammar::syntax_tree* build_ast (FILE* fp)
+	{
+		scanner::lexer ds_scanner (fp);
+		ast* state = ast_create ();
+		analyzer::parser ds_parser (state);
+		//ds_parser.enable_debug (stderr, "--yy-- ");
+		build_ast (ds_scanner, ds_parser);
+		grammar::syntax_tree* result = (grammar::syntax_tree*)ast_content (state);
+		ast_free (state);
+		return result;
+	}
+	// ----------------------------------------------------------------
+	grammar::syntax_tree* build_ast (const char* text)
+	{
+		scanner::lexer ds_scanner (text);
+		ast* state = ast_create ();
+		analyzer::parser ds_parser (state);
+		ds_parser.enable_debug (stderr, "--yy-- ");
+		build_ast (ds_scanner, ds_parser);
+		grammar::syntax_tree* result = (grammar::syntax_tree*)ast_content (state);
+		ast_free (state);
+		return result;
+	}
+} // ns datascript

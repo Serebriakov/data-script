@@ -5,11 +5,12 @@
 #include "datascript/datascript_api.h"
 #include "datascript/syntax_tree.hpp"
 
-DATASCRIPT_SCANNER_NS_BEGIN
+namespace datascript
+{
 
-DATASCRIPT_API syntax_tree* build_ast (FILE* fp);
-DATASCRIPT_API syntax_tree* build_ast (const char* text);
+	DATASCRIPT_API grammar::syntax_tree* build_ast (FILE* fp);
+	DATASCRIPT_API grammar::syntax_tree* build_ast (const char* text);
 
-DATASCRIPT_SCANNER_NS_END
+} // ns datascript
 
 #endif
