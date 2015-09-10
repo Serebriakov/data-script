@@ -1,0 +1,1 @@
+Attempt to implement datascript (http://datascript.berlios.de/DataScriptLanguageOverview.html) parser
